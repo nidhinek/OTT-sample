@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nidhinek.ottminiframe.data.BaseModel
 import com.nidhinek.ottminiframe.data.ImdbSearchResponse
-import com.nidhinek.ottminiframe.databinding.CarousalViewBinding
 
 class HomeAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -33,9 +32,8 @@ class HomeAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :
     }
 
     override fun getItemViewType(position: Int): Int {
-         if (playList.getOrNull(position)?.railViewTitle==HomeFragment.CAROUSAL)
-         {
-          return   VIEW_TYPE_CAROUSAL
+        if (playList.getOrNull(position)?.railViewTitle == HomeFragment.CAROUSAL) {
+            return VIEW_TYPE_CAROUSAL
         }
         return VIEW_TYPE_GRID
     }
@@ -43,8 +41,7 @@ class HomeAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :
     fun addToPlaylist(playList: List<BaseModel>) {
         this.playList.clear()
         this.playList.addAll(playList)
-        notifyDataSetChanged()
-        //notifyItemRangeInserted(0, playList.size)
+        notifyItemRangeInserted(0, playList.size)
     }
 
     fun clearList() {

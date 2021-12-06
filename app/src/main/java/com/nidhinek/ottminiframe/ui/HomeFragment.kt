@@ -33,9 +33,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = HomeFragmentBinding.inflate(layoutInflater)
-        initPlayListRecyclerAdapter(onClicked  = { mediaList, position -> {
+        initPlayListRecyclerAdapter(onClicked = { mediaList, position ->
+            {
 
-        }})
+            }
+        })
         return binding.root
     }
 
@@ -63,11 +65,11 @@ class HomeFragment : Fragment() {
             when (it) {
                 is Resource.Success -> {
                     Log.d("success", "success")
-                    var data=( it.value as? ImdbSearchResponse)
-                    var uiComponentRails= arrayListOf<BaseModel>()
-                    val dataLayoutSet1=data?.copy(railTitle = CAROUSAL)
+                    var data = (it.value as? ImdbSearchResponse)
+                    var uiComponentRails = arrayListOf<BaseModel>()
+                    val dataLayoutSet1 = data?.copy(railTitle = CAROUSAL)
                     dataLayoutSet1?.let { it1 -> uiComponentRails.add(it1) }
-                    val dataLayoutSet2=data?.copy(railTitle = GRID)
+                    val dataLayoutSet2 = data?.copy(railTitle = GRID)
                     dataLayoutSet2?.let { it1 -> uiComponentRails.add(it1) }
                     addToPlaylist(uiComponentRails)
                 }

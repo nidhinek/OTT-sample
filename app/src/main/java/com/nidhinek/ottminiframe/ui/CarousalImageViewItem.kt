@@ -16,12 +16,15 @@ data class CarousalImageData(
 
 class CarousalImageViewItem(context: Context) : BaseWidget<CarousalImageData>(context = context) {
     private lateinit var imageView: ImageView
+
     override fun getLayoutId(): Int {
         return R.layout.carousal_image_view
     }
 
     override fun bindData(data: CarousalImageData, viewPosition: Int) {
         imageView = widgetView.findViewById(R.id.imageView)
-        Glide.with(imageView).load((data.model as DataModel).image?.imageUrl).into(imageView)
+        (data.model as? DataModel)?.image?.imageUrl?.let {
+            Glide.with(imageView.context).load(it).dontAnimate().into(imageView)
+        }
     }
 }

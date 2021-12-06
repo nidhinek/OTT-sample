@@ -4,13 +4,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nidhinek.ottminiframe.data.BaseModel
-import com.nidhinek.ottminiframe.databinding.CarousalImageViewBinding
 
-class CarousalAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CarousalAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val playList: ArrayList<BaseModel> = arrayListOf()
+
     companion object {
         const val VIEW_TYPE_HORIZONDAL = 1
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val view: View = when (viewType) {
@@ -35,15 +37,8 @@ class CarousalAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Uni
     fun addToPlaylist(playList: List<BaseModel>) {
         this.playList.clear()
         this.playList.addAll(playList)
-       // notifyItemRangeInserted(0, playList.size)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, playList.size)
     }
-
-    fun clearList() {
-        this.playList.clear()
-        notifyDataSetChanged()
-    }
-
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -51,11 +46,12 @@ class CarousalAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Uni
             when (view) {
                 is CarousalImageViewItem -> {
                     view.bindData(
-                        CarousalImageData(model, adapterPosition) {
-                            onClicked(playList as? ArrayList<BaseModel>, adapterPosition)
-                        }
-
-                    )
+                        CarousalImageData(model,
+                            adapterPosition,
+                            onClicked = {
+                                onClicked(playList as? ArrayList<BaseModel>, adapterPosition)
+                            }
+                        ))
                 }
             }
         }

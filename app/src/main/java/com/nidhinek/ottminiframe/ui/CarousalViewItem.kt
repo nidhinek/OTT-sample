@@ -1,7 +1,6 @@
 package com.nidhinek.ottminiframe.ui
 
 import android.content.Context
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nidhinek.ottminiframe.R
 import com.nidhinek.ottminiframe.data.BaseModel
@@ -28,7 +27,7 @@ class CarousalViewItem(context: Context) : BaseWidget<CarousalData>(context = co
 
     private fun initRecyclerAdapter(onClicked: () -> Unit) {
         recyclerView = widgetView.findViewById(R.id.recyclerView)
-        val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        val layoutManager = CenterZoomLinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         carousalAdapter = CarousalAdapter(onClicked = { mediaList, position ->
             {
@@ -36,17 +35,15 @@ class CarousalViewItem(context: Context) : BaseWidget<CarousalData>(context = co
             }
         })
         recyclerView?.adapter = carousalAdapter
+        recyclerView?.addItemDecoration(
+            HorizondalSpaceItemDecorator(
+                resources.getDimension(R.dimen.sixteenDp).toInt()
+            )
+        )
     }
 
     private fun addToPlaylist(playList: List<BaseModel>?) {
         playList?.let { carousalAdapter?.addToPlaylist(it) }
-        // carousalAdapter?.notifyDataSetChanged()
     }
-
-    private fun release() {
-        carousalAdapter?.clearList()
-        carousalAdapter = null
-    }
-
 
 }
