@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getMovies("english")
+        viewModel.getMovies("drama")
         viewModel.searchResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
@@ -70,7 +70,10 @@ class HomeFragment : Fragment() {
                     val dataLayoutSet1 = data?.copy(railTitle = CAROUSAL)
                     dataLayoutSet1?.let { it1 -> uiComponentRails.add(it1) }
                     val dataLayoutSet2 = data?.copy(railTitle = GRID)
-                    dataLayoutSet2?.let { it1 -> uiComponentRails.add(it1) }
+                    dataLayoutSet2?.let { it1 ->
+                        uiComponentRails.add(it1)
+                        uiComponentRails.add(it1)
+                    }
                     addToPlaylist(uiComponentRails)
                 }
                 is Resource.Loading -> {

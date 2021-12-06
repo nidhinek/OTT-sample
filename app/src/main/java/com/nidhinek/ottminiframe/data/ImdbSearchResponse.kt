@@ -8,4 +8,4 @@ data class ImdbSearchResponse(
     @SerializedName("q") var query: String? = null,
     @SerializedName("v") var version: Int? = null,
     var railTitle: String? = null
-):BaseModel(railTitle)
+) : BaseModel(railTitle)

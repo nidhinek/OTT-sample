@@ -61,6 +61,13 @@ class HomeAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Unit) :
                         }
                     )
                 }
+                is GridViewItem -> {
+                    view.bindData(
+                        GridViewData((model as? ImdbSearchResponse)?.data, adapterPosition) {
+                            onClicked(playList as? ArrayList<BaseModel>, adapterPosition)
+                        }
+                    )
+                }
             }
         }
     }

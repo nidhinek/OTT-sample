@@ -13,11 +13,13 @@ interface ImdbService {
     suspend fun searchMovies(
         @Query("q") query: String
     ): ImdbSearchResponse
+
     companion object {
         private const val BASE_URL = "https://imdb8.p.rapidapi.com"
 
         fun create(): ImdbService {
-            val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+            val logger =
+                HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
