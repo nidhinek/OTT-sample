@@ -48,9 +48,7 @@ class CarousalAdapter(private val onClicked: (ArrayList<BaseModel>?, Int) -> Uni
                     view.bindData(
                         CarousalImageData(model,
                             adapterPosition,
-                            onClicked = {
-                                onClicked(playList as? ArrayList<BaseModel>, adapterPosition)
-                            }
+                            onClicked = onClicked(playList as? ArrayList<BaseModel>, adapterPosition)
                         ))
                 }
             }

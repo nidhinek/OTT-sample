@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nidhinek.ottminiframe.data.BaseModel
@@ -20,14 +20,14 @@ class HomeFragment : Fragment() {
 
     companion object {
         fun newInstance() = HomeFragment()
-        const val CAROUSAL = "carousal"
-        const val GRID = "grid"
+        const val CAROUSAL = "Movies"
+        const val GRID = "Now showing"
     }
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: HomeFragmentBinding
     private var homeAdapter: HomeAdapter? = null
-
+    val playList: ArrayList<BaseModel> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         binding = HomeFragmentBinding.inflate(layoutInflater)
         initPlayListRecyclerAdapter(onClicked = { mediaList, position ->
             {
-
+                Log.d("clicked", "clicked")
             }
         })
         return binding.root
@@ -46,9 +46,22 @@ class HomeFragment : Fragment() {
         binding?.recyclerView.layoutManager = layoutManager
         homeAdapter = HomeAdapter(onClicked)
         binding.recyclerView?.adapter = homeAdapter
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val itemPosition = layoutManager.findFirstVisibleItemPosition()
+                Log.d("pos", itemPosition.toString())
+                if (itemPosition >= 0 && itemPosition < playList.size) {
+                    val title = playList.get(itemPosition).railViewTitle
+                    Log.d("title", title.toString())
+                    title?.let { viewModel.setToolbarTitle(it) }
+                }
+            }
+        })
     }
 
     private fun addToPlaylist(playList: List<BaseModel>) {
+        this.playList.addAll(playList)
         homeAdapter?.addToPlaylist(playList)
     }
 

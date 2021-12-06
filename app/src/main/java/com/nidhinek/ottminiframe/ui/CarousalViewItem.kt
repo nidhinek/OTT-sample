@@ -1,6 +1,7 @@
 package com.nidhinek.ottminiframe.ui
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.nidhinek.ottminiframe.R
 import com.nidhinek.ottminiframe.data.BaseModel
@@ -30,9 +31,7 @@ class CarousalViewItem(context: Context) : BaseWidget<CarousalData>(context = co
         val layoutManager = CenterZoomLinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         carousalAdapter = CarousalAdapter(onClicked = { mediaList, position ->
-            {
-
-            }
+             Log.d("click","addaptyer")
         })
         recyclerView?.adapter = carousalAdapter
         recyclerView?.addItemDecoration(

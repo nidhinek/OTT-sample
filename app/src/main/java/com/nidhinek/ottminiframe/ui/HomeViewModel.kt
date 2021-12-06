@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: ImdbRepository) : ViewModel() {
+    val title: MutableLiveData<String> = MutableLiveData()
     private val _searchResponse: MutableLiveData<Resource<ImdbSearchResponse>> = MutableLiveData()
     val searchResponse: LiveData<Resource<ImdbSearchResponse>>
         get() = _searchResponse
@@ -20,5 +21,9 @@ class HomeViewModel @Inject constructor(private val repository: ImdbRepository) 
     fun getMovies(query: String) = viewModelScope.launch {
         _searchResponse.value = Resource.Loading
         _searchResponse.value = repository.searchMovies(query)
+    }
+
+    fun setToolbarTitle(titleHeader: String) {
+        title.value = titleHeader
     }
 }

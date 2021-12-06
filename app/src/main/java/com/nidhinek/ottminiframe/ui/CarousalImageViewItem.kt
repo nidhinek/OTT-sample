@@ -11,7 +11,7 @@ import com.nidhinek.ottminiframe.ui.base.BaseWidget
 data class CarousalImageData(
     var model: BaseModel,
     var itemPosition: Int,
-    val onClicked: () -> Unit
+    val onClicked: Unit
 )
 
 class CarousalImageViewItem(context: Context) : BaseWidget<CarousalImageData>(context = context) {
@@ -25,6 +25,9 @@ class CarousalImageViewItem(context: Context) : BaseWidget<CarousalImageData>(co
         imageView = widgetView.findViewById(R.id.imageView)
         (data.model as? DataModel)?.image?.imageUrl?.let {
             Glide.with(imageView.context).load(it).dontAnimate().into(imageView)
+        }
+        imageView.setOnClickListener{
+            data.onClicked
         }
     }
 }
